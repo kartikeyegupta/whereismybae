@@ -28,7 +28,9 @@ function ResultsContent() {
     try {
       const canvas = await html2canvas(captureRef.current, {
         backgroundColor: "#000000",
-        scale: 3, // Increased for even better quality
+        scale: 2,
+        width: 1080,    // 9:16 ratio width
+        height: 1920,   // 9:16 ratio height
       });
       const dataURL = canvas.toDataURL("image/png");
       const link = document.createElement("a");
@@ -57,6 +59,13 @@ function ResultsContent() {
           ref={captureRef} 
           id="shareable-container" 
           className="mb-6 p-8 bg-gradient-to-b from-pink-900 to-black rounded-3xl border border-pink-500/30 relative"
+          style={{ 
+            width: '1080px',      // 9:16 ratio base width
+            height: '1920px',     // 9:16 ratio base height
+            maxWidth: '90vw',     // Ensure it's visible on screen
+            transform: 'scale(0.5)',  // Scale down for viewing
+            transformOrigin: 'top center'
+          }}
         >
           {/* Decorative corner emojis */}
           <div className="absolute -top-2 -left-2 text-3xl rotate-[-15deg]">💝</div>
@@ -64,31 +73,31 @@ function ResultsContent() {
           <div className="absolute -bottom-2 -left-2 text-3xl rotate-[15deg]">💖</div>
           <div className="absolute -bottom-2 -right-2 text-3xl rotate-[-15deg]">💗</div>
 
-          <h1 className="text-4xl md:text-5xl font-bold mb-8 text-center text-white tracking-tight drop-shadow-[0_0_10px_rgba(236,72,153,0.5)]">
+          <h1 className="text-6xl font-bold mb-16 text-center text-white tracking-tight drop-shadow-[0_0_10px_rgba(236,72,153,0.5)]">
             My Red Flags 🚩
           </h1>
 
-          <div className="space-y-6 flex-grow">
+          <div className="space-y-8 flex-grow">
             {redFlags.map((flag: { title: string; description: string }, index: number) => (
               <div
                 key={index}
-                className="p-6 rounded-2xl bg-black/20 backdrop-blur-sm border border-pink-500/30 shadow-[0_0_15px_rgba(236,72,153,0.15)]"
+                className="p-8 rounded-2xl bg-black/20 backdrop-blur-sm border border-pink-500/30 shadow-[0_0_15px_rgba(236,72,153,0.15)]"
               >
-                <h2 className="text-xl font-black text-white mb-3 flex items-center gap-2">
-                  <span className="text-2xl">🚩</span> 
+                <h2 className="text-3xl font-black text-white mb-4 flex items-center gap-3">
+                  <span className="text-4xl">🚩</span> 
                   {flag.title}
                 </h2>
-                <p className="text-white font-bold text-md leading-snug mb ">{flag.description}</p>
+                <p className="text-white font-bold text-2xl leading-relaxed">{flag.description}</p>
               </div>
             ))}
           </div>
 
           {/* Added branding */}
-          <div className="mt-5 text-center">
-            <p className="text-white/60 text-lg font-medium">
+          <div className="mt-16 text-center">
+            <p className="text-white/60 text-3xl font-medium">
               Find out yours at
             </p>
-            <p className="text-pink-500 text-xl font-bold">
+            <p className="text-pink-500 text-4xl font-bold mt-2">
               whereismybae.com
             </p>
           </div>
