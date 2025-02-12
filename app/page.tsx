@@ -607,9 +607,9 @@ export default function Home() {
       
       // Determine theme based on gender
       let theme = 'neutral';
-      if (selectedGender === 'Male 🚹') {
+      if (selectedGender === 'Male') {
         theme = 'masculine';
-      } else if (selectedGender === 'Female 🚺') {
+      } else if (selectedGender === 'Female') {
         theme = 'cute';
       }
 
