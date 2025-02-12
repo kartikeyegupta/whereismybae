@@ -630,7 +630,7 @@ export default function Home() {
         <div className="absolute text-5xl animate-float4 top-[110%] left-[30%]">🚩</div>
         <div className="absolute text-6xl animate-float5 top-[110%] left-[70%]">🚩</div>
       </div>
-
+      
       <main className="max-w-2xl w-full p-6 md:p-8 rounded-2xl shadow-2xl bg-black border border-black relative z-10">
         <h1 className="text-4xl md:text-5xl font-bold mb-12 text-center text-white tracking-tight">
           What are my red flags?
