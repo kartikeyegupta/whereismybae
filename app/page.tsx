@@ -1,101 +1,101 @@
-import Image from "next/image";
+'use client';
+import { useState } from "react";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [currentQuestion, setCurrentQuestion] = useState(0);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const questions = [
+    {
+      question: "1. What is the most common stress factor for college students?",
+      options: ["Academic pressure", "Financial concerns", "Social life", "Time management"]
+    },
+    {
+      question: "2. How many hours does the average college student sleep per night?",
+      options: ["6-7 hours", "7-8 hours", "5-6 hours", "8-9 hours"]
+    },
+    {
+      question: "3. What percentage of college students work while studying?",
+      options: ["43%", "67%", "81%", "52%"]
+    },
+    {
+      question: "4. What is the most popular major among college students?",
+      options: ["Business", "Psychology", "Engineering", "Computer Science"]
+    },
+    {
+      question: "5. What percentage of college students live on campus?",
+      options: ["48%", "35%", "22%", "15%"]
+    }
+  ];
+
+  const nextQuestion = () => {
+    if (currentQuestion < questions.length - 1) {
+      setCurrentQuestion(prev => prev + 1);
+    }
+  };
+
+  const previousQuestion = () => {
+    if (currentQuestion > 0) {
+      setCurrentQuestion(prev => prev - 1);
+    }
+  };
+
+  return (
+    <div className="min-h-screen p-8 flex justify-center items-center bg-black">
+      <main className="max-w-2xl w-full bg-gray-900 rounded-lg shadow-lg p-8 border border-pink-500/20">
+        <h1 className="text-3xl font-bold mb-12 text-center text-pink-500">
+          College Student Quiz
+        </h1>
+        
+        <div className="relative min-h-[400px] flex flex-col justify-between">
+          <div className="space-y-6 animate-fadeIn">
+            <p className="font-medium mb-6 text-xl text-white">
+              {questions[currentQuestion].question}
+            </p>
+            <div className="space-y-4">
+              {questions[currentQuestion].options.map((option, index) => (
+                <label 
+                  key={index} 
+                  className="flex items-center p-4 border border-pink-500/20 rounded-lg hover:bg-pink-500/10 transition-all cursor-pointer group"
+                >
+                  <input 
+                    type="radio" 
+                    name={`q${currentQuestion}`} 
+                    className="mr-3 accent-pink-500"
+                  />
+                  <span className="text-white group-hover:text-pink-500 transition-colors">
+                    {option}
+                  </span>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex justify-between mt-8 pt-6 border-t border-pink-500/20">
+            <button 
+              onClick={previousQuestion}
+              disabled={currentQuestion === 0}
+              className="px-6 py-2 rounded-lg bg-gray-800 text-white hover:bg-pink-500/20 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Previous
+            </button>
+            {currentQuestion === questions.length - 1 ? (
+              <button 
+                type="submit" 
+                className="px-6 py-2 rounded-lg bg-pink-500 text-white hover:bg-pink-600 transition-colors"
+              >
+                Submit Quiz
+              </button>
+            ) : (
+              <button 
+                onClick={nextQuestion}
+                className="px-6 py-2 rounded-lg bg-pink-500 text-white hover:bg-pink-600 transition-colors"
+              >
+                Next
+              </button>
+            )}
+          </div>
         </div>
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
   );
 }
