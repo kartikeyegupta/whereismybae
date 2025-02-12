@@ -114,7 +114,7 @@ function ResultsContent() {
             <div className="absolute bottom-24 right-6 text-2xl opacity-50">{currentTheme.decorations[3]}</div>
           </div>
 
-          <h1 className={`text-3xl sm:text-4xl md:text-5xl font-bold mb-8 sm:mb-10 text-center text-${currentTheme.text} tracking-tight`}>
+          <h1 className={`text-3xl sm:text-4xl md:text-5xl font-bold mb-8 mt-5 sm:mb-10 text-center text-${currentTheme.text} tracking-tight`}>
             My Red Flags 🚩
           </h1>
 
