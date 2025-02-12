@@ -1,36 +1,79 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# WhereIsMyBae: Discover Your Dating Red Flags
 
-## Getting Started
+This Next.js application is a fun and engaging quiz designed to identify a user's dating red flags using a humorous approach tailored to a college audience. The quiz generates personalized insights using OpenAI's GPT-4 model.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+*   Interactive quiz with multiple-choice questions.
+*   Personalized red flag analysis based on user responses.
+*   Humorous and relatable red flag descriptions using college slang.
+*   Customizable themes for results presentation.
+*   Downloadable results image for sharing.
+*   Responsive design for various screen sizes.
+*   Integration with OpenAI's GPT-4 API for advanced text generation.
+*   Google Analytics integration for tracking usage.
+
+## Usage
+
+1.  Begin the quiz by answering the questions.
+2.  Select options that best reflect your dating behaviors.
+3.  Upon completion, you'll receive a personalized report detailing your top red flags.
+4.  Download the report as an image to share with friends.
+
+
+## Installation
+
+1.  Clone the repository: `git clone <repository_url>`
+2.  Navigate to the project directory: `cd whereismybae`
+3.  Install dependencies: `npm install` or `yarn install` or `pnpm install` or `bun install`
+4.  Set your OpenAI API key as the environment variable `NEXT_PUBLIC_SECRET`.
+5.  Run the development server: `npm run dev`
+
+
+## Technologies Used
+
+*   **Next.js:** A React framework for building web applications, used for the frontend and API routes.
+*   **React:** A JavaScript library for building user interfaces.
+*   **OpenAI API:** Used for generating personalized red flag analysis using GPT-4.
+*   **Tailwind CSS:** A utility-first CSS framework for rapid UI development.
+*   **Lucide React:** An icon library used to include icons in the UI.
+*   **html2canvas:** A library used to convert the results page into an image for download.
+*   **TypeScript:**  Provides static typing for improved code maintainability and error detection.
+*   **Google Analytics:** Used to track usage.
+
+
+## API Documentation
+
+The API endpoint `/api/redflags` accepts POST requests with the following JSON payload:
+
+```json
+{
+  "gender": "Male", // or "Female", "Non-binary", "Prefer not to say"
+  "answers": ["Answer 1", "Answer 2", "Answer 3", "Answer 4", "Answer 5", "Answer 6", "Answer 7", "Answer 8", "Answer 9", "Answer 10"]
+}
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+It returns a JSON response:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```json
+{
+  "analysis": "{ \"red_flags\": [ { \"title\": \"Short phrase\", \"description\": \"Short sentence\" }, ... ] }"
+}
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+or an error message if something goes wrong.
 
-## Learn More
+## Dependencies
 
-To learn more about Next.js, take a look at the following resources:
+The project dependencies are listed in `package.json`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Contributing
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Contributions are welcome! Please open an issue or submit a pull request.
 
-## Deploy on Vercel
+## Testing
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+No formal testing framework is currently implemented.  Consider adding unit and integration tests for improved code quality and robustness.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+*README.md was made with [Etchr](https://etchr.dev)*
