@@ -9,6 +9,7 @@ import { useRef, Suspense } from "react";
 function ResultsContent() {
   const searchParams = useSearchParams();
   const analysis = searchParams.get("analysis");
+  const theme = searchParams.get("theme") || "cute";
 
   // Parse the analysis JSON string into red flags
   let redFlags = [];
@@ -28,7 +29,9 @@ function ResultsContent() {
     try {
       const canvas = await html2canvas(captureRef.current, {
         backgroundColor: "#000000",
-        scale: 3, // Increased for even better quality
+        scale: 3,
+        windowWidth: 1080,
+        windowHeight: 1920,
       });
       const dataURL = canvas.toDataURL("image/png");
       const link = document.createElement("a");
@@ -39,6 +42,48 @@ function ResultsContent() {
       console.error("Error capturing image:", err);
     }
   };
+
+  // Theme configurations
+  const themes = {
+    cute: {
+      background: "#FFE5F1",
+      border: "pink-400",
+      text: "pink-600",
+      cardBg: "white",
+      cardBorder: "pink-300",
+      cardText: "pink-700",
+      buttonBg: "pink-400",
+      buttonHoverBg: "pink-500",
+      buttonBorder: "pink-300",
+      decorations: ["✨", "💖", "🌸", "✨"],
+    },
+    masculine: {
+      background: "#FFE5E5",
+      border: "red-500",
+      text: "red-700",
+      cardBg: "white",
+      cardBorder: "red-400",
+      cardText: "red-800",
+      buttonBg: "red-500",
+      buttonHoverBg: "red-600",
+      buttonBorder: "red-400",
+      decorations: ["🔥", "💪", "⚡", "🎯"],
+    },
+    neutral: {
+      background: "#F0F0F0",
+      border: "gray-400",
+      text: "gray-700",
+      cardBg: "white",
+      cardBorder: "gray-300",
+      cardText: "gray-700",
+      buttonBg: "gray-500",
+      buttonHoverBg: "gray-600",
+      buttonBorder: "gray-400",
+      decorations: ["⭐", "✦", "★", "✧"],
+    }
+  };
+
+  const currentTheme = themes[theme as keyof typeof themes] || themes.cute;
 
   return (
     <div className="relative min-h-screen p-4 md:p-8 flex justify-center items-center bg-black overflow-hidden">
@@ -56,15 +101,17 @@ function ResultsContent() {
         <div 
           ref={captureRef} 
           id="shareable-container" 
-          className="mb-6 p-8 bg-gradient-to-b from-pink-900 to-black rounded-3xl border border-pink-500/30 relative"
+          className={`mb-6 p-8 bg-[${currentTheme.background}] rounded-[45px] border-4 border-dashed border-${currentTheme.border} relative aspect-[9/16] w-full max-w-md mx-auto overflow-hidden`}
         >
-          {/* Decorative corner emojis */}
-          <div className="absolute -top-2 -left-2 text-3xl rotate-[-15deg]">💝</div>
-          <div className="absolute -top-2 -right-2 text-3xl rotate-[15deg]">💘</div>
-          <div className="absolute -bottom-2 -left-2 text-3xl rotate-[15deg]">💖</div>
-          <div className="absolute -bottom-2 -right-2 text-3xl rotate-[-15deg]">💗</div>
+          {/* Add decorative elements */}
+          <div className="absolute top-0 left-0 w-full h-full">
+            <div className="absolute top-4 left-4 text-3xl rotate-[-15deg]">{currentTheme.decorations[0]}</div>
+            <div className="absolute top-6 right-6 text-3xl rotate-[15deg]">{currentTheme.decorations[1]}</div>
+            <div className="absolute bottom-20 left-6 text-3xl rotate-[15deg]">{currentTheme.decorations[2]}</div>
+            <div className="absolute bottom-24 right-8 text-3xl rotate-[-20deg]">{currentTheme.decorations[3]}</div>
+          </div>
 
-          <h1 className="text-4xl md:text-5xl font-bold mb-8 text-center text-white tracking-tight drop-shadow-[0_0_10px_rgba(236,72,153,0.5)]">
+          <h1 className={`text-4xl md:text-5xl font-bold mb-8 text-center text-${currentTheme.text} tracking-tight rotate-[-2deg]`}>
             My Red Flags 🚩
           </h1>
 
@@ -72,43 +119,42 @@ function ResultsContent() {
             {redFlags.map((flag: { title: string; description: string }, index: number) => (
               <div
                 key={index}
-                className="p-6 rounded-2xl bg-black/20 backdrop-blur-sm border border-pink-500/30 shadow-[0_0_15px_rgba(236,72,153,0.15)]"
+                className={`p-6 rounded-[25px] bg-${currentTheme.cardBg} border-2 border-${currentTheme.cardBorder} shadow-lg rotate-[1deg] hover:rotate-[-1deg] transition-transform`}
               >
-                <h2 className="text-xl font-black text-white mb-3 flex items-center gap-2">
+                <h2 className={`text-xl font-black text-${currentTheme.text} mb-3 flex items-center gap-2`}>
                   <span className="text-2xl">🚩</span> 
                   {flag.title}
                 </h2>
-                <p className="text-white font-bold text-md leading-snug mb ">{flag.description}</p>
+                <p className={`text-${currentTheme.cardText} font-medium text-md leading-snug`}>{flag.description}</p>
               </div>
             ))}
           </div>
 
-          {/* Added branding */}
+          {/* Updated branding */}
           <div className="mt-5 text-center">
-            <p className="text-white/60 text-lg font-medium">
+            <p className={`text-${currentTheme.text}/80 text-lg font-medium rotate-[-1deg]`}>
               Find out yours at
             </p>
-            <p className="text-pink-500 text-xl font-bold">
-              whereismybae.com
+            <p className={`text-${currentTheme.text} text-xl font-bold rotate-[2deg] mt-1`}>
+              {currentTheme.decorations[0]} whereismybae.com {currentTheme.decorations[0]}
             </p>
           </div>
         </div>
 
+        {/* Update the buttons to match the cute theme */}
         <div className="flex flex-col items-center gap-4">
-          {/* Button to download the image */}
           <button
             onClick={handleDownloadImage}
-            className="bg-pink-600 hover:bg-pink-700 text-white font-medium py-2 px-4 rounded-xl transition-all"
+            className={`bg-${currentTheme.buttonBg} hover:bg-${currentTheme.buttonHoverBg} text-white font-medium py-3 px-6 rounded-full transition-all border-2 border-${currentTheme.buttonBorder} shadow-lg hover:shadow-xl transform hover:scale-105`}
           >
-            Download
+            {currentTheme.decorations[0]} Download {currentTheme.decorations[0]}
           </button>
 
-          {/* Link to retake quiz */}
           <Link
             href="/"
-            className="flex items-center gap-2 text-white/70 hover:text-pink-500 active:bg-white/5 
-            transition-all duration-300 font-medium border border-white/10 rounded-xl 
-            hover:border-pink-500/50 px-4 py-2"
+            className={`flex items-center gap-2 text-${currentTheme.buttonBg} hover:text-${currentTheme.buttonHoverBg} 
+            transition-all duration-300 font-medium border-2 border-${currentTheme.buttonBorder} rounded-full 
+            hover:border-${currentTheme.buttonHoverBg} px-6 py-3 hover:scale-105`}
           >
             <ChevronLeft size={20} />
             Take Quiz Again

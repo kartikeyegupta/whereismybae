@@ -604,7 +604,16 @@ export default function Home() {
       if (!response.ok) throw new Error("Failed to submit results");
 
       const data = await response.json();
-      window.location.href = `/results?analysis=${encodeURIComponent(data.analysis)}`;
+      
+      // Determine theme based on gender
+      let theme = 'neutral';
+      if (selectedGender === 'Male') {
+        theme = 'masculine';
+      } else if (selectedGender === 'Female') {
+        theme = 'cute';
+      }
+
+      window.location.href = `/results?analysis=${encodeURIComponent(data.analysis)}&theme=${theme}`;
     } catch (error) {
       console.error("Error submitting results:", error);
       setIsLoading(false);
