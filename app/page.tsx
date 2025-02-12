@@ -529,16 +529,16 @@ export default function Home() {
   // (If user is in Greek life -> male/female Greek sets;
   //  otherwise -> your usual sets)
   const relevantQuestions = isGreekLife
-    ? selectedGender === "Male"
+    ? selectedGender === "Male 🚹"
       ? maleGreekQuestions
-      : selectedGender === "Female"
+      : selectedGender === "Female 🚺"
       ? femaleGreekQuestions
       : otherQuestions
-    : selectedGender === "Male"
+    : selectedGender === "Male 🚹"
     ? questions
-    : selectedGender === "Female"
+    : selectedGender === "Female 🚺"
     ? femaleQuestions
-    : selectedGender === "Non-binary" || selectedGender === "Prefer not to say"
+    : selectedGender === "Non-binary 🚻" || selectedGender === "Prefer not to say 🤐"
     ? otherQuestions
     : [questions[0]]; // fallback if gender not set yet
 
@@ -607,9 +607,9 @@ export default function Home() {
       
       // Determine theme based on gender
       let theme = 'neutral';
-      if (selectedGender === 'Male') {
+      if (selectedGender === 'Male 🚹') {
         theme = 'masculine';
-      } else if (selectedGender === 'Female') {
+      } else if (selectedGender === 'Female 🚺') {
         theme = 'cute';
       }
 

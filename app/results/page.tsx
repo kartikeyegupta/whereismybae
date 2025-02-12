@@ -27,21 +27,12 @@ function ResultsContent() {
     if (!captureRef.current) return;
 
     try {
-      // Temporarily remove the dashed border for the screenshot
-      const container = captureRef.current;
-      const originalBorder = container.style.border;
-      container.style.border = 'none';
-
       const canvas = await html2canvas(captureRef.current, {
         backgroundColor: "#000000",
         scale: 3,
         windowWidth: 1080,
         windowHeight: 1920,
       });
-
-      // Restore the original border
-      container.style.border = originalBorder;
-
       const dataURL = canvas.toDataURL("image/png");
       const link = document.createElement("a");
       link.href = dataURL;
@@ -56,38 +47,38 @@ function ResultsContent() {
   const themes = {
     cute: {
       background: "#FFE5F1",
-      border: "pink-400",
-      text: "pink-600",
-      cardBg: "white",
-      cardBorder: "pink-300",
-      cardText: "pink-700",
-      buttonBg: "pink-400",
-      buttonHoverBg: "pink-500",
-      buttonBorder: "pink-300",
+      border: "border-pink-400",
+      text: "text-pink-600",
+      cardBg: "bg-white",
+      cardBorder: "border-pink-300",
+      cardText: "text-pink-700",
+      buttonBg: "bg-pink-400",
+      buttonHoverBg: "hover:bg-pink-500",
+      buttonBorder: "border-pink-300",
       decorations: ["✧", "✦", "✧", "✦"],
     },
     masculine: {
       background: "radial-gradient(circle at center, #2d0808 0%, #1a0000 100%)",
-      border: "red-500",
-      text: "red-500",
-      cardBg: "black",
-      cardBorder: "red-500",
-      cardText: "gray-200",
-      buttonBg: "red-500",
-      buttonHoverBg: "red-600",
-      buttonBorder: "red-400",
+      border: "border-red-500",
+      text: "text-red-500",
+      cardBg: "bg-black",
+      cardBorder: "border-red-500",
+      cardText: "text-gray-200",
+      buttonBg: "bg-red-500",
+      buttonHoverBg: "hover:bg-red-600",
+      buttonBorder: "border-red-400",
       decorations: ["◆", "◇", "◆", "◇"],
     },
     neutral: {
       background: "#F0F0F0",
-      border: "gray-400",
-      text: "gray-700",
-      cardBg: "white",
-      cardBorder: "gray-300",
-      cardText: "gray-700",
-      buttonBg: "gray-500",
-      buttonHoverBg: "gray-600",
-      buttonBorder: "gray-400",
+      border: "border-gray-400",
+      text: "text-gray-700",
+      cardBg: "bg-white",
+      cardBorder: "border-gray-300",
+      cardText: "text-gray-700",
+      buttonBg: "bg-gray-500",
+      buttonHoverBg: "hover:bg-gray-600",
+      buttonBorder: "border-gray-400",
       decorations: ["●", "○", "●", "○"],
     }
   };
@@ -113,7 +104,7 @@ function ResultsContent() {
           style={{
             background: theme === 'masculine' ? currentTheme.background : currentTheme.background,
           }}
-          className={`mb-3 sm:mb-6 p-3 sm:p-8 rounded-[20px] sm:rounded-[45px] border-4 border-dashed border-${currentTheme.border} relative aspect-[9/16] w-full max-w-md mx-auto overflow-hidden flex flex-col`}
+          className={`mb-3 sm:mb-6 p-3 sm:p-8 rounded-[20px] sm:rounded-[45px] border-4 border-dashed ${currentTheme.border} relative aspect-[9/16] w-full max-w-md mx-auto overflow-hidden flex flex-col`}
         >
           {/* Updated decorative elements with adjusted positioning */}
           <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
@@ -123,7 +114,7 @@ function ResultsContent() {
             <div className="absolute bottom-16 sm:bottom-24 right-3 sm:right-6 text-xl sm:text-2xl opacity-50">{currentTheme.decorations[3]}</div>
           </div>
 
-          <h1 className={`text-2xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-8 mt-3 sm:mt-5 text-center text-${currentTheme.text} tracking-tight`}>
+          <h1 className={`text-2xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-8 mt-3 sm:mt-5 text-center ${currentTheme.text} tracking-tight`}>
             My Red Flags 🚩
           </h1>
 
@@ -132,13 +123,13 @@ function ResultsContent() {
               {redFlags.map((flag: { title: string; description: string }, index: number) => (
                 <div
                   key={index}
-                  className={`p-3 sm:p-6 rounded-[15px] sm:rounded-[25px] bg-${currentTheme.cardBg} border-2 border-${currentTheme.cardBorder} shadow-lg`}
+                  className={`p-3 sm:p-6 rounded-[15px] sm:rounded-[25px] ${currentTheme.cardBg} ${currentTheme.cardBorder} shadow-lg`}
                 >
-                  <h2 className={`text-base sm:text-xl font-black text-${currentTheme.text} mb-2 sm:mb-4 flex items-center gap-2`}>
+                  <h2 className={`text-base sm:text-xl font-black ${currentTheme.text} mb-2 sm:mb-4 flex items-center gap-2`}>
                     <span className="text-lg sm:text-2xl">🚩</span> 
                     {flag.title}
                   </h2>
-                  <p className={`text-${currentTheme.cardText} font-medium text-xs sm:text-md leading-relaxed`}>
+                  <p className={`${currentTheme.cardText} font-medium text-xs sm:text-md leading-relaxed`}>
                     {flag.description}
                   </p>
                 </div>
@@ -147,10 +138,10 @@ function ResultsContent() {
           </div>
 
           <div className="mt-4 sm:mt-10 text-center">
-            <p className={`text-${currentTheme.text}/80 text-sm sm:text-lg font-medium`}>
+            <p className={`${currentTheme.text} opacity-80 text-sm sm:text-lg font-medium`}>
               Find out yours at
             </p>
-            <p className={`text-${currentTheme.text} text-base sm:text-xl font-bold mt-1`}>
+            <p className={`${currentTheme.text} text-base sm:text-xl font-bold mt-1`}>
               {currentTheme.decorations[0]} whereismybae.com {currentTheme.decorations[0]}
             </p>
           </div>
@@ -160,16 +151,16 @@ function ResultsContent() {
         <div className="flex flex-col items-center gap-3 sm:gap-4">
           <button
             onClick={handleDownloadImage}
-            className={`bg-${currentTheme.buttonBg} hover:bg-${currentTheme.buttonHoverBg} text-white font-medium py-2 sm:py-3 px-4 sm:px-6 rounded-full transition-all border-2 border-${currentTheme.buttonBorder} shadow-lg hover:shadow-xl transform hover:scale-105 text-sm sm:text-base`}
+            className={`${currentTheme.buttonBg} ${currentTheme.buttonHoverBg} text-white font-medium py-2 sm:py-3 px-4 sm:px-6 rounded-full transition-all ${currentTheme.buttonBorder} shadow-lg hover:shadow-xl transform hover:scale-105 text-sm sm:text-base`}
           >
             {currentTheme.decorations[0]} Download {currentTheme.decorations[0]}
           </button>
 
           <Link
             href="/"
-            className={`flex items-center gap-2 text-${currentTheme.buttonBg} hover:text-${currentTheme.buttonHoverBg} 
-            transition-all duration-300 font-medium border-2 border-${currentTheme.buttonBorder} rounded-full 
-            hover:border-${currentTheme.buttonHoverBg} px-4 sm:px-6 py-2 sm:py-3 hover:scale-105 text-sm sm:text-base`}
+            className={`flex items-center gap-2 ${currentTheme.text} ${currentTheme.buttonHoverBg} 
+            transition-all duration-300 font-medium ${currentTheme.buttonBorder} rounded-full 
+            hover:${currentTheme.buttonBorder} px-4 sm:px-6 py-2 sm:py-3 hover:scale-105 text-sm sm:text-base`}
           >
             <ChevronLeft size={18} />
             Take Quiz Again
