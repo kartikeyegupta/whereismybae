@@ -104,7 +104,7 @@ function ResultsContent() {
           style={{
             background: theme === 'masculine' ? currentTheme.background : currentTheme.background,
           }}
-          className={`mb-6 p-8 rounded-[45px] border-4 border-dashed border-${currentTheme.border} relative aspect-[9/16] w-full max-w-md mx-auto overflow-hidden`}
+          className={`mb-4 sm:mb-6 p-4 sm:p-8 rounded-[30px] sm:rounded-[45px] border-4 border-dashed border-${currentTheme.border} relative aspect-[9/16] w-full max-w-md mx-auto overflow-hidden flex flex-col`}
         >
           {/* Updated decorative elements with more subtle positioning */}
           <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
@@ -114,31 +114,36 @@ function ResultsContent() {
             <div className="absolute bottom-24 right-6 text-2xl opacity-50">{currentTheme.decorations[3]}</div>
           </div>
 
-          <h1 className={`text-4xl md:text-5xl font-bold mb-8 text-center text-${currentTheme.text} tracking-tight`}>
+          <h1 className={`text-3xl sm:text-4xl md:text-5xl font-bold mb-8 sm:mb-10 text-center text-${currentTheme.text} tracking-tight`}>
             My Red Flags 🚩
           </h1>
 
-          <div className="space-y-6 flex-grow">
-            {redFlags.map((flag: { title: string; description: string }, index: number) => (
-              <div
-                key={index}
-                className={`p-6 rounded-[25px] bg-${currentTheme.cardBg} border-2 border-${currentTheme.cardBorder} shadow-lg`}
-              >
-                <h2 className={`text-xl font-black text-${currentTheme.text} mb-3 flex items-center gap-2`}>
-                  <span className="text-2xl">🚩</span> 
-                  {flag.title}
-                </h2>
-                <p className={`text-${currentTheme.cardText} font-medium text-md leading-snug`}>{flag.description}</p>
-              </div>
-            ))}
+          {/* Added flex-1 and justify-center to center cards vertically */}
+          <div className="flex-1 flex flex-col justify-center">
+            <div className="space-y-5 sm:space-y-7">
+              {redFlags.map((flag: { title: string; description: string }, index: number) => (
+                <div
+                  key={index}
+                  className={`p-5 sm:p-6 rounded-[20px] sm:rounded-[25px] bg-${currentTheme.cardBg} border-2 border-${currentTheme.cardBorder} shadow-lg`}
+                >
+                  <h2 className={`text-lg sm:text-xl font-black text-${currentTheme.text} mb-3 sm:mb-4 flex items-center gap-2`}>
+                    <span className="text-xl sm:text-2xl">🚩</span> 
+                    {flag.title}
+                  </h2>
+                  <p className={`text-${currentTheme.cardText} font-medium text-sm sm:text-md leading-relaxed`}>
+                    {flag.description}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
 
-          {/* Updated branding with absolute positioning */}
-          <div className="absolute bottom-8 left-0 right-0 text-center">
-            <p className={`text-${currentTheme.text}/80 text-lg font-medium`}>
+          {/* Updated bottom spacing */}
+          <div className="mt-8 sm:mt-10 text-center">
+            <p className={`text-${currentTheme.text}/80 text-base sm:text-lg font-medium`}>
               Find out yours at
             </p>
-            <p className={`text-${currentTheme.text} text-xl font-bold mt-1`}>
+            <p className={`text-${currentTheme.text} text-lg sm:text-xl font-bold mt-1`}>
               {currentTheme.decorations[0]} whereismybae.com {currentTheme.decorations[0]}
             </p>
           </div>
