@@ -10,6 +10,7 @@ export default function Home() {
   const [selectedGender, setSelectedGender] = useState("");
   const [selectedOptionIndexValue, setSelectedOptionIndexValue] = useState<number | null>(null);
   const [answers, setAnswers] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Updated question arrays
   const questions = [
@@ -584,6 +585,7 @@ export default function Home() {
   }
 
   async function handleSubmitResults() {
+    setIsLoading(true);
     const results = {
       isGreekLife,
       gender: selectedGender,
@@ -602,10 +604,10 @@ export default function Home() {
       if (!response.ok) throw new Error("Failed to submit results");
 
       const data = await response.json();
-      // Redirect to results page with analysis data
       window.location.href = `/results?analysis=${encodeURIComponent(data.analysis)}`;
     } catch (error) {
       console.error("Error submitting results:", error);
+      setIsLoading(false);
     }
   }
 
@@ -666,11 +668,17 @@ export default function Home() {
             </button>
             <button
               onClick={nextQuestion}
-              className="p-3 text-pink-500 hover:text-pink-400 active:bg-pink-500/10 transition-all duration-300 font-medium flex items-center gap-2 border border-pink-500/50 rounded-xl hover:border-pink-500"
+              disabled={isLoading}
+              className="p-3 text-pink-500 hover:text-pink-400 active:bg-pink-500/10 transition-all duration-300 font-medium flex items-center gap-2 border border-pink-500/50 rounded-xl hover:border-pink-500 disabled:opacity-50 disabled:cursor-not-allowed"
               aria-label="Next question"
             >
               {currentQuestion === 0 || currentQuestion !== relevantQuestions.length - 1 ? (
                 <ChevronRight size={24} />
+              ) : isLoading ? (
+                <div className="flex items-center gap-2">
+                  <div className="w-5 h-5 border-2 border-pink-500 border-t-transparent rounded-full animate-spin"></div>
+                  Analyzing...
+                </div>
               ) : (
                 "See Results"
               )}
