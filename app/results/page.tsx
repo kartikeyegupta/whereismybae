@@ -27,12 +27,21 @@ function ResultsContent() {
     if (!captureRef.current) return;
 
     try {
+      // Temporarily remove the dashed border for the screenshot
+      const container = captureRef.current;
+      const originalBorder = container.style.border;
+      container.style.border = 'none';
+
       const canvas = await html2canvas(captureRef.current, {
         backgroundColor: "#000000",
         scale: 3,
         windowWidth: 1080,
         windowHeight: 1920,
       });
+
+      // Restore the original border
+      container.style.border = originalBorder;
+
       const dataURL = canvas.toDataURL("image/png");
       const link = document.createElement("a");
       link.href = dataURL;
@@ -86,7 +95,7 @@ function ResultsContent() {
   const currentTheme = themes[theme as keyof typeof themes] || themes.cute;
 
   return (
-    <div className="relative min-h-screen p-4 md:p-8 flex justify-center items-center bg-black overflow-hidden">
+    <div className="relative min-h-screen p-2 sm:p-4 md:p-8 flex justify-center items-center bg-black overflow-hidden">
       {/* Floating background flags */}
       <div className="pointer-events-none select-none opacity-30">
         <div className="absolute text-5xl animate-float1 top-[110%] left-[10%]">🚩</div>
@@ -96,7 +105,7 @@ function ResultsContent() {
         <div className="absolute text-6xl animate-float5 top-[110%] left-[70%]">🚩</div>
       </div>
 
-      <main className="max-w-2xl w-full p-6 md:p-8 rounded-2xl shadow-2xl bg-black border border-black relative z-10">
+      <main className="max-w-2xl w-full p-3 sm:p-6 md:p-8 rounded-2xl shadow-2xl bg-black border border-black relative z-10">
         {/* Container we want to screenshot */}
         <div 
           ref={captureRef} 
@@ -104,33 +113,32 @@ function ResultsContent() {
           style={{
             background: theme === 'masculine' ? currentTheme.background : currentTheme.background,
           }}
-          className={`mb-4 sm:mb-6 p-4 sm:p-8 rounded-[30px] sm:rounded-[45px] border-4 border-dashed border-${currentTheme.border} relative aspect-[9/16] w-full max-w-md mx-auto overflow-hidden flex flex-col`}
+          className={`mb-3 sm:mb-6 p-3 sm:p-8 rounded-[20px] sm:rounded-[45px] border-4 border-dashed border-${currentTheme.border} relative aspect-[9/16] w-full max-w-md mx-auto overflow-hidden flex flex-col`}
         >
-          {/* Updated decorative elements with more subtle positioning */}
+          {/* Updated decorative elements with adjusted positioning */}
           <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
-            <div className="absolute top-6 left-6 text-2xl opacity-50">{currentTheme.decorations[0]}</div>
-            <div className="absolute top-6 right-6 text-2xl opacity-50">{currentTheme.decorations[1]}</div>
-            <div className="absolute bottom-24 left-6 text-2xl opacity-50">{currentTheme.decorations[2]}</div>
-            <div className="absolute bottom-24 right-6 text-2xl opacity-50">{currentTheme.decorations[3]}</div>
+            <div className="absolute top-3 sm:top-6 left-3 sm:left-6 text-xl sm:text-2xl opacity-50">{currentTheme.decorations[0]}</div>
+            <div className="absolute top-3 sm:top-6 right-3 sm:right-6 text-xl sm:text-2xl opacity-50">{currentTheme.decorations[1]}</div>
+            <div className="absolute bottom-16 sm:bottom-24 left-3 sm:left-6 text-xl sm:text-2xl opacity-50">{currentTheme.decorations[2]}</div>
+            <div className="absolute bottom-16 sm:bottom-24 right-3 sm:right-6 text-xl sm:text-2xl opacity-50">{currentTheme.decorations[3]}</div>
           </div>
 
-          <h1 className={`text-3xl sm:text-4xl md:text-5xl font-bold mb-8 mt-5 sm:mb-10 text-center text-${currentTheme.text} tracking-tight`}>
+          <h1 className={`text-2xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-8 mt-3 sm:mt-5 text-center text-${currentTheme.text} tracking-tight`}>
             My Red Flags 🚩
           </h1>
 
-          {/* Added flex-1 and justify-center to center cards vertically */}
           <div className="flex-1 flex flex-col justify-center">
-            <div className="space-y-5 sm:space-y-7">
+            <div className="space-y-3 sm:space-y-7">
               {redFlags.map((flag: { title: string; description: string }, index: number) => (
                 <div
                   key={index}
-                  className={`p-5 sm:p-6 rounded-[20px] sm:rounded-[25px] bg-${currentTheme.cardBg} border-2 border-${currentTheme.cardBorder} shadow-lg`}
+                  className={`p-3 sm:p-6 rounded-[15px] sm:rounded-[25px] bg-${currentTheme.cardBg} border-2 border-${currentTheme.cardBorder} shadow-lg`}
                 >
-                  <h2 className={`text-lg sm:text-xl font-black text-${currentTheme.text} mb-3 sm:mb-4 flex items-center gap-2`}>
-                    <span className="text-xl sm:text-2xl">🚩</span> 
+                  <h2 className={`text-base sm:text-xl font-black text-${currentTheme.text} mb-2 sm:mb-4 flex items-center gap-2`}>
+                    <span className="text-lg sm:text-2xl">🚩</span> 
                     {flag.title}
                   </h2>
-                  <p className={`text-${currentTheme.cardText} font-medium text-sm sm:text-md leading-relaxed`}>
+                  <p className={`text-${currentTheme.cardText} font-medium text-xs sm:text-md leading-relaxed`}>
                     {flag.description}
                   </p>
                 </div>
@@ -138,22 +146,21 @@ function ResultsContent() {
             </div>
           </div>
 
-          {/* Updated bottom spacing */}
-          <div className="mt-8 sm:mt-10 text-center">
-            <p className={`text-${currentTheme.text}/80 text-base sm:text-lg font-medium`}>
+          <div className="mt-4 sm:mt-10 text-center">
+            <p className={`text-${currentTheme.text}/80 text-sm sm:text-lg font-medium`}>
               Find out yours at
             </p>
-            <p className={`text-${currentTheme.text} text-lg sm:text-xl font-bold mt-1`}>
+            <p className={`text-${currentTheme.text} text-base sm:text-xl font-bold mt-1`}>
               {currentTheme.decorations[0]} whereismybae.com {currentTheme.decorations[0]}
             </p>
           </div>
         </div>
 
-        {/* Update the buttons to match the cute theme */}
-        <div className="flex flex-col items-center gap-4">
+        {/* Update the buttons with smaller padding on mobile */}
+        <div className="flex flex-col items-center gap-3 sm:gap-4">
           <button
             onClick={handleDownloadImage}
-            className={`bg-${currentTheme.buttonBg} hover:bg-${currentTheme.buttonHoverBg} text-white font-medium py-3 px-6 rounded-full transition-all border-2 border-${currentTheme.buttonBorder} shadow-lg hover:shadow-xl transform hover:scale-105`}
+            className={`bg-${currentTheme.buttonBg} hover:bg-${currentTheme.buttonHoverBg} text-white font-medium py-2 sm:py-3 px-4 sm:px-6 rounded-full transition-all border-2 border-${currentTheme.buttonBorder} shadow-lg hover:shadow-xl transform hover:scale-105 text-sm sm:text-base`}
           >
             {currentTheme.decorations[0]} Download {currentTheme.decorations[0]}
           </button>
@@ -162,9 +169,9 @@ function ResultsContent() {
             href="/"
             className={`flex items-center gap-2 text-${currentTheme.buttonBg} hover:text-${currentTheme.buttonHoverBg} 
             transition-all duration-300 font-medium border-2 border-${currentTheme.buttonBorder} rounded-full 
-            hover:border-${currentTheme.buttonHoverBg} px-6 py-3 hover:scale-105`}
+            hover:border-${currentTheme.buttonHoverBg} px-4 sm:px-6 py-2 sm:py-3 hover:scale-105 text-sm sm:text-base`}
           >
-            <ChevronLeft size={20} />
+            <ChevronLeft size={18} />
             Take Quiz Again
           </Link>
         </div>
