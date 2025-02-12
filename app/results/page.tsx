@@ -4,9 +4,9 @@ import { useSearchParams } from "next/navigation";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import html2canvas from "html2canvas";
-import { useRef } from "react";
+import { useRef, Suspense } from "react";
 
-export default function ResultsPage() {
+function ResultsContent() {
   const searchParams = useSearchParams();
   const analysis = searchParams.get("analysis");
 
@@ -174,5 +174,17 @@ export default function ResultsPage() {
         }
       `}</style>
     </div>
+  );
+}
+
+export default function ResultsPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-black">
+        <div className="text-white text-xl">Loading...</div>
+      </div>
+    }>
+      <ResultsContent />
+    </Suspense>
   );
 }
