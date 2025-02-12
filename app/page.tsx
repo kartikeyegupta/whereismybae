@@ -92,7 +92,7 @@ export default function Home() {
   const femaleQuestions = [
     {
       question: "What's your gender?",
-      options: ["Male 🚹", "Female 🚺", "Non-binary 🏳️‍🌈", "Prefer not to say 🤐"]
+      options: ["Male 🚹", "Female 🚺", "Non-binary 🚻", "Prefer not to say 🤐"]
     },
     {
       question: "1. What's your toxic texting habit?",
@@ -168,7 +168,7 @@ export default function Home() {
   const otherQuestions = [
     {
       question: "What's your gender?",
-      options: ["Male 🚹", "Female 🚺", "Non-binary 🏳️‍🌈", "Prefer not to say 🤐"]
+      options: ["Male 🚹", "Female 🚺", "Non-binary 🚻", "Prefer not to say 🤐"]
     },
     {
       question: "1. How do you handle texting someone you like?",
@@ -253,7 +253,7 @@ export default function Home() {
   const maleGreekQuestions = [
     {
       question: "What's your gender?",
-      options: ["Male 🚹", "Female 🚺", "Non-binary 🏳️‍🌈", "Prefer not to say 🤐"]
+      options: ["Male 🚹", "Female 🚺", "Non-binary 🚻", "Prefer not to say 🤐"]
     },
     {
       question: "1. During Rush, your top priority is…",
@@ -332,7 +332,7 @@ export default function Home() {
   const femaleGreekQuestions = [
     {
       question: "What's your gender?",
-      options: ["Male 🚹", "Female 🚺", "Non-binary 🏳️‍🌈", "Prefer not to say 🤐"]
+      options: ["Male 🚹", "Female 🚺", "Non-binary 🚻", "Prefer not to say 🤐"]
     },
     {
       question: "1. During recruitment, your biggest concern is…",
@@ -525,22 +525,19 @@ export default function Home() {
   // STEP 2: Proceed with existing quiz logic
   // --------------------------
 
-  // Decide which question set to use based on Greek life & gender
-  // (If user is in Greek life -> male/female Greek sets;
-  //  otherwise -> your usual sets)
-  const relevantQuestions = isGreekLife
-    ? selectedGender === "Male 🚹"
-      ? maleGreekQuestions
-      : selectedGender === "Female 🚺"
-      ? femaleGreekQuestions
-      : otherQuestions
-    : selectedGender === "Male 🚹"
-    ? questions
-    : selectedGender === "Female 🚺"
-    ? femaleQuestions
-    : selectedGender === "Non-binary 🚻" || selectedGender === "Prefer not to say 🤐"
-    ? otherQuestions
-    : [questions[0]]; // fallback if gender not set yet
+  const getQuestions = () => {
+    if (isGreekLife) {
+      if (selectedGender == "Male") return maleGreekQuestions;
+      if (selectedGender == "Female") return femaleGreekQuestions;
+      return otherQuestions;
+    } else {
+      if (selectedGender == "Male") return questions;
+      if (selectedGender == "Female") return femaleQuestions;
+      return otherQuestions;
+    }
+  };
+
+  const relevantQuestions = getQuestions();
 
   function handleOptionSelect(index: number) {
     setSelectedOptionIndexValue(index);
@@ -548,6 +545,8 @@ export default function Home() {
 
   function nextQuestion() {
     if (selectedOptionIndexValue === null) return;
+
+    
 
     // Store the selected answer
     const selectedAnswer = relevantQuestions[currentQuestion].options[selectedOptionIndexValue];
@@ -559,13 +558,14 @@ export default function Home() {
       // Extract the first word from the option, which should be "Male", "Female", etc.
       const optionValue = relevantQuestions[0].options[selectedOptionIndexValue].split(" ")[0];
       setSelectedGender(optionValue);
+      
 
       // If the array only has that one question, bail out (edge case)
       if (relevantQuestions.length === 1) {
         setCurrentQuestion((prev) => prev + 1);
         setSelectedOptionIndexValue(null);
-        return;
       }
+      
     }
 
     // Otherwise, move forward or submit
@@ -642,7 +642,7 @@ export default function Home() {
               {relevantQuestions[currentQuestion].question}
             </p>
             <div className="space-y-3">
-              {relevantQuestions[currentQuestion].options.map((option, idx) => {
+              {relevantQuestions[currentQuestion].options.map((option: string, idx: number) => {
                 const isSelected = selectedOptionIndexValue === idx;
                 return (
                   <div
