@@ -59,7 +59,7 @@ export default function Home() {
     },
     {
       question:
-        "7. What's your go-to coping strategy when you see your crush posting selfies with someone else?",
+        "7. What's your go-to coping strategy when you see your crush posting with someone else?",
       options: [
         "Like and comment something sarcastic to show I'm totally unbothered 🙃",
         "Ignore it, then quietly panic-text my group chat for advice 😅",
@@ -69,7 +69,7 @@ export default function Home() {
     {
       question: "8. You just found out your situationship is also talking to your friend. Your move?",
       options: [
-        "Immediately draft a passive-aggressive subtweet 🐦",
+        "Immediately draft a passive-aggressive text 💬",
         "Confront them with screenshots and receipts 🧾",
         "Give everyone the benefit of the doubt and see how it plays out 🤷"
       ]
@@ -141,7 +141,7 @@ export default function Home() {
     {
       question: "8. You just found out your situationship is also talking to your friend. Your move?",
       options: [
-        "Immediately draft a passive-aggressive subtweet 🐦",
+        "Immediately draft a passive-aggressive text 💬",
         "Confront them with screenshots and receipts 🧾",
         "Give everyone the benefit of the doubt and see how it plays out 🤷"
       ]
@@ -225,7 +225,7 @@ export default function Home() {
     {
       question: "8. You just found out your situationship is also talking to your friend. Your move?",
       options: [
-        "Immediately draft a passive-aggressive subtweet 🐦",
+        "Immediately draft a passive-aggressive text 💬",
         "Confront them with screenshots and receipts 🧾",
         "Give everyone the benefit of the doubt and see how it plays out 🤷"
       ]
